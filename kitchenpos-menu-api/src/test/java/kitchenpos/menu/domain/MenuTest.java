@@ -1,10 +1,9 @@
 package kitchenpos.menu.domain;
 
-import static kitchenpos.menugroup.domain.MenuGroupTestFixture.generateMenuGroup;
 import static kitchenpos.menu.domain.MenuProductTestFixture.generateMenuProduct;
 import static kitchenpos.menu.domain.MenuTestFixture.generateMenu;
+import static kitchenpos.menugroup.domain.MenuGroupTestFixture.generateMenuGroup;
 import static kitchenpos.product.domain.ProductTestFixture.generateProduct;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -13,7 +12,6 @@ import java.util.Arrays;
 import kitchenpos.common.constant.ErrorCode;
 import kitchenpos.menugroup.domain.MenuGroup;
 import kitchenpos.product.domain.Product;
-import kitchenpos.product.domain.ProductTestFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,9 +32,9 @@ public class MenuTest {
 
     @BeforeEach
     void setUp() {
-        감자튀김 = ProductTestFixture.generateProduct(1L, "감자튀김", BigDecimal.valueOf(3000L));
-        콜라 = ProductTestFixture.generateProduct(2L, "콜라", BigDecimal.valueOf(1500L));
-        불고기버거 = ProductTestFixture.generateProduct(3L, "불고기버거", BigDecimal.valueOf(4000L));
+        감자튀김 = generateProduct(1L, "감자튀김", BigDecimal.valueOf(3000L));
+        콜라 = generateProduct(2L, "콜라", BigDecimal.valueOf(1500L));
+        불고기버거 = generateProduct(3L, "불고기버거", BigDecimal.valueOf(4000L));
         햄버거세트 = generateMenuGroup(1L, "햄버거세트");
         감자튀김상품 = generateMenuProduct(1L, null, 감자튀김, 1L);
         콜라상품 = generateMenuProduct(2L, null, 콜라, 1L);

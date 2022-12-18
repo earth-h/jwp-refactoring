@@ -23,10 +23,7 @@ import java.util.Optional;
 import kitchenpos.common.constant.ErrorCode;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
-import kitchenpos.menu.domain.MenuProductTestFixture;
-import kitchenpos.menu.domain.MenuTestFixture;
 import kitchenpos.menugroup.domain.MenuGroup;
-import kitchenpos.menugroup.domain.MenuGroupTestFixture;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.OrderMenu;
 import kitchenpos.order.domain.OrderRepository;
@@ -38,9 +35,7 @@ import kitchenpos.ordertable.domain.OrderTableRepository;
 import kitchenpos.ordertable.dto.OrderTableRequest;
 import kitchenpos.ordertable.dto.OrderTableResponse;
 import kitchenpos.product.domain.Product;
-import kitchenpos.product.domain.ProductTestFixture;
 import kitchenpos.tablegroup.domain.TableGroup;
-import kitchenpos.tablegroup.domain.TableGroupTestFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -80,15 +75,15 @@ public class TableServiceTest {
 
     @BeforeEach
     void setUp() {
-        불고기버거 = ProductTestFixture.generateProduct("불고기버거", BigDecimal.valueOf(4000L));
-        불고기버거상품 = MenuProductTestFixture.generateMenuProduct(불고기버거, 1L);
-        햄버거단품 = MenuGroupTestFixture.generateMenuGroup("햄버거단품");
-        불고기버거단품 = MenuTestFixture.generateMenu(1L, "불고기버거세트", BigDecimal.valueOf(4000L), 햄버거단품, singletonList(불고기버거상품));
+        불고기버거 = generateProduct("불고기버거", BigDecimal.valueOf(4000L));
+        불고기버거상품 = generateMenuProduct(불고기버거, 1L);
+        햄버거단품 = generateMenuGroup("햄버거단품");
+        불고기버거단품 = generateMenu(1L, "불고기버거세트", BigDecimal.valueOf(4000L), 햄버거단품, singletonList(불고기버거상품));
         불고기버거단품주문상품 = generateOrderMenu(불고기버거단품);
         불고기버거세트주문요청 = generateOrderLineItemRequest(불고기버거단품.getId(), 2);
         주문테이블A = generateOrderTable(1L, 5, false);
         주문테이블B = generateOrderTable(2L, 4, false);
-        주문 = generateOrder(주문테이블B, singletonList(불고기버거세트주문요청.toOrderLineItem(불고기버거단품주문상품)));
+        주문 = generateOrder(주문테이블B.getId(), singletonList(불고기버거세트주문요청.toOrderLineItem(불고기버거단품주문상품)));
     }
 
     @DisplayName("주문 테이블을 생성한다.")
@@ -165,7 +160,7 @@ public class TableServiceTest {
     @Test
     void changeTableEmptyThrowErrorWhenTableGroupIdIsNotNull() {
         // given
-        TableGroup tableGroup = TableGroupTestFixture.generateTableGroup(1L, Arrays.asList(주문테이블A, 주문테이블B));
+        TableGroup tableGroup = generateTableGroup(1L, Arrays.asList(주문테이블A, 주문테이블B));
         OrderTable orderTable = generateOrderTable(5L, 4, false);
         orderTable.registerTableGroup(tableGroup.getId());
         OrderTableRequest changeOrderTableRequest = generateOrderTableRequest(4, true);

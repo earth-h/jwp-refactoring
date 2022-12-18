@@ -7,7 +7,6 @@ import static kitchenpos.menugroup.domain.MenuGroupTestFixture.generateMenuGroup
 import static kitchenpos.order.domain.OrderLineItemTestFixture.generateOrderLineItem;
 import static kitchenpos.order.domain.OrderMenuTestFixture.generateOrderMenu;
 import static kitchenpos.order.domain.OrderTestFixture.generateOrder;
-import static kitchenpos.ordertable.domain.OrderTableTestFixture.generateOrderTable;
 import static kitchenpos.product.domain.ProductTestFixture.generateProduct;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -17,7 +16,6 @@ import kitchenpos.common.constant.ErrorCode;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
 import kitchenpos.menugroup.domain.MenuGroup;
-import kitchenpos.ordertable.domain.OrderTable;
 import kitchenpos.product.domain.Product;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +36,6 @@ public class OrderTest {
     private OrderMenu 치킨버거단품주문메뉴;
     private OrderLineItem 치킨버거단품_주문_항목;
     private OrderLineItem 불고기버거단품_주문_항목;
-    private OrderTable 주문테이블;
 
     @BeforeEach
     void setUp() {
@@ -53,14 +50,13 @@ public class OrderTest {
         불고기버거단품주문메뉴 = generateOrderMenu(불고기버거단품);
         치킨버거단품_주문_항목 = generateOrderLineItem(치킨버거단품주문메뉴, 2);
         불고기버거단품_주문_항목 = generateOrderLineItem(불고기버거단품주문메뉴, 1);
-        주문테이블 = generateOrderTable(4, false);
     }
 
     @DisplayName("주문을 생성한다.")
     @Test
     void createOrder() {
         // when
-        Order order = generateOrder(주문테이블,  OrderLineItems.from(Arrays.asList(치킨버거단품_주문_항목, 불고기버거단품_주문_항목)));
+        Order order = generateOrder(1L,  OrderLineItems.from(Arrays.asList(치킨버거단품_주문_항목, 불고기버거단품_주문_항목)));
 
         // then
         Assertions.assertThat(order.getOrderLineItems()
@@ -70,24 +66,11 @@ public class OrderTest {
                 .containsExactly(치킨버거단품주문메뉴, 불고기버거단품주문메뉴);
     }
 
-    @DisplayName("주문 테이블이 비어있으면 주문 생성 시 오류가 발생한다.")
-    @Test
-    void createOrderThrowErrorWhenOrderTableIsEmpty() {
-        // given
-        OrderTable emptyOrderTable = generateOrderTable(4, true);
-
-        // when & then
-        assertThatThrownBy(
-                () -> generateOrder(emptyOrderTable, OrderLineItems.from(Arrays.asList(치킨버거단품_주문_항목, 불고기버거단품_주문_항목))))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorCode.주문_테이블은_비어있으면_안됨.getErrorMessage());
-    }
-
     @DisplayName("주문 상태를 변경한다.")
     @Test
     void changeOrderStatus() {
         // given
-        Order order = generateOrder(주문테이블,  OrderLineItems.from(Arrays.asList(치킨버거단품_주문_항목, 불고기버거단품_주문_항목)));
+        Order order = generateOrder(1L,  OrderLineItems.from(Arrays.asList(치킨버거단품_주문_항목, 불고기버거단품_주문_항목)));
 
         // when
         order.changeOrderStatus(OrderStatus.COMPLETION);
@@ -100,7 +83,7 @@ public class OrderTest {
     @Test
     void changeOrderStatusThrowErrorWhenAlreadyCompletion() {
         // given
-        Order order = generateOrder(주문테이블,  OrderLineItems.from(Arrays.asList(치킨버거단품_주문_항목, 불고기버거단품_주문_항목)));
+        Order order = generateOrder(1L,  OrderLineItems.from(Arrays.asList(치킨버거단품_주문_항목, 불고기버거단품_주문_항목)));
         order.changeOrderStatus(OrderStatus.COMPLETION);
 
         // when & then
@@ -113,7 +96,7 @@ public class OrderTest {
     @Test
     void ifNotCompletionOrderThrowError() {
         // given
-        Order order = generateOrder(주문테이블,  OrderLineItems.from(Arrays.asList(치킨버거단품_주문_항목, 불고기버거단품_주문_항목)));
+        Order order = generateOrder(1L,  OrderLineItems.from(Arrays.asList(치킨버거단품_주문_항목, 불고기버거단품_주문_항목)));
 
         // when & then
         assertThatThrownBy(order::validateIfNotCompletionOrder)

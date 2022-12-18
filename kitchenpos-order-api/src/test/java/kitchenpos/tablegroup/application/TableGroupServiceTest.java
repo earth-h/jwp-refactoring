@@ -90,7 +90,7 @@ public class TableGroupServiceTest {
         주문테이블B = generateOrderTable(2L, 4, false);
         주문테이블C = generateOrderTable(3L, 5, true);
         주문테이블D = generateOrderTable(4L, 4, true);
-        주문 = generateOrder(주문테이블B, singletonList(불고기버거세트주문요청.toOrderLineItem(불고기버거단품주문상품)));
+        주문 = generateOrder(주문테이블B.getId(), singletonList(불고기버거세트주문요청.toOrderLineItem(불고기버거단품주문상품)));
     }
 
     @DisplayName("주문 테이블들에 대해 단체를 설정한다.")

@@ -8,19 +8,16 @@ import kitchenpos.ordertable.domain.OrderTable;
 
 public class OrderTestFixture {
 
-    public static Order generateOrder(Long id, OrderTable orderTable, List<OrderLineItem> orderLineItems) {
-        validateOrderTable(orderTable);
-        return new Order(id, orderTable.getId(), OrderLineItems.from(orderLineItems));
+    public static Order generateOrder(Long id, Long orderTableId, List<OrderLineItem> orderLineItems) {
+        return new Order(id, orderTableId, OrderLineItems.from(orderLineItems));
     }
 
-    public static Order generateOrder(OrderTable orderTable, OrderLineItems orderLineItems) {
-        validateOrderTable(orderTable);
-        return new Order(null, orderTable.getId(), orderLineItems);
+    public static Order generateOrder(Long orderTableId, OrderLineItems orderLineItems) {
+        return new Order(null, orderTableId, orderLineItems);
     }
 
-    public static Order generateOrder(OrderTable orderTable, List<OrderLineItem> orderLineItems) {
-        validateOrderTable(orderTable);
-        return Order.of(orderTable.getId(), OrderLineItems.from(orderLineItems));
+    public static Order generateOrder(Long orderTableId, List<OrderLineItem> orderLineItems) {
+        return Order.of(orderTableId, OrderLineItems.from(orderLineItems));
     }
 
     public static OrderRequest generateOrderRequest(Long orderTableId, OrderStatus orderStatus, List<OrderLineItemRequest> orderLineItems) {

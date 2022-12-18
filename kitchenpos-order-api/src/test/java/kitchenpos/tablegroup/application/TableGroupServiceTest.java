@@ -12,7 +12,6 @@ import static kitchenpos.ordertable.domain.OrderTableTestFixture.generateOrderTa
 import static kitchenpos.product.domain.ProductTestFixture.generateProduct;
 import static kitchenpos.tablegroup.domain.TableGroupTestFixture.generateTableGroup;
 import static kitchenpos.tablegroup.domain.TableGroupTestFixture.generateTableGroupRequest;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,10 +23,7 @@ import java.util.Optional;
 import kitchenpos.common.constant.ErrorCode;
 import kitchenpos.menu.domain.Menu;
 import kitchenpos.menu.domain.MenuProduct;
-import kitchenpos.menu.domain.MenuProductTestFixture;
-import kitchenpos.menu.domain.MenuTestFixture;
 import kitchenpos.menugroup.domain.MenuGroup;
-import kitchenpos.menugroup.domain.MenuGroupTestFixture;
 import kitchenpos.order.domain.Order;
 import kitchenpos.order.domain.OrderMenu;
 import kitchenpos.order.domain.OrderRepository;
@@ -37,7 +33,6 @@ import kitchenpos.order.validator.OrderValidator;
 import kitchenpos.ordertable.domain.OrderTable;
 import kitchenpos.ordertable.domain.OrderTableRepository;
 import kitchenpos.product.domain.Product;
-import kitchenpos.product.domain.ProductTestFixture;
 import kitchenpos.tablegroup.domain.TableGroup;
 import kitchenpos.tablegroup.domain.TableGroupRepository;
 import kitchenpos.tablegroup.dto.TableGroupRequest;
@@ -85,10 +80,10 @@ public class TableGroupServiceTest {
 
     @BeforeEach
     void setUp() {
-        불고기버거 = ProductTestFixture.generateProduct("불고기버거", BigDecimal.valueOf(4000L));
-        불고기버거상품 = MenuProductTestFixture.generateMenuProduct(불고기버거, 1L);
-        햄버거단품 = MenuGroupTestFixture.generateMenuGroup("햄버거단품");
-        불고기버거단품 = MenuTestFixture.generateMenu(1L, "불고기버거세트", BigDecimal.valueOf(4000L), 햄버거단품, singletonList(불고기버거상품));
+        불고기버거 = generateProduct("불고기버거", BigDecimal.valueOf(4000L));
+        불고기버거상품 = generateMenuProduct(불고기버거, 1L);
+        햄버거단품 = generateMenuGroup("햄버거단품");
+        불고기버거단품 = generateMenu(1L, "불고기버거세트", BigDecimal.valueOf(4000L), 햄버거단품, singletonList(불고기버거상품));
         불고기버거단품주문상품 = generateOrderMenu(불고기버거단품);
         불고기버거세트주문요청 = generateOrderLineItemRequest(불고기버거단품.getId(), 2);
         주문테이블A = generateOrderTable(1L, 5, true);

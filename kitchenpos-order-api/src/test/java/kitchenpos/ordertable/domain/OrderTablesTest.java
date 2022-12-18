@@ -4,14 +4,12 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static kitchenpos.ordertable.domain.OrderTableTestFixture.generateOrderTable;
 import static kitchenpos.tablegroup.domain.TableGroupTestFixture.generateTableGroup;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.util.Arrays;
 import kitchenpos.common.constant.ErrorCode;
 import kitchenpos.tablegroup.domain.TableGroup;
-import kitchenpos.tablegroup.domain.TableGroupTestFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -78,7 +76,7 @@ public class OrderTablesTest {
     @Test
     void updateTableGroupInOrderTables() {
         // given
-        TableGroup tableGroup = TableGroupTestFixture.generateTableGroup(1L, Arrays.asList(주문테이블A, 주문테이블B));
+        TableGroup tableGroup = generateTableGroup(1L, Arrays.asList(주문테이블A, 주문테이블B));
         OrderTable 주문테이블C = generateOrderTable(3L, 5, true);
         OrderTable 주문테이블D = generateOrderTable(4L, 5, true);
         OrderTables orderTables = OrderTables.from(Arrays.asList(주문테이블C, 주문테이블D));

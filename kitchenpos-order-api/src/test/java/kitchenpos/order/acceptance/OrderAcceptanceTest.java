@@ -27,23 +27,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import kitchenpos.common.acceptance.AcceptanceTest;
-import kitchenpos.menu.acceptance.MenuRestAssured;
-import kitchenpos.menu.domain.MenuProductTestFixture;
-import kitchenpos.menu.domain.MenuTestFixture;
 import kitchenpos.menu.dto.MenuProductRequest;
 import kitchenpos.menu.dto.MenuResponse;
-import kitchenpos.menugroup.acceptance.MenuGroupRestAssured;
-import kitchenpos.menugroup.domain.MenuGroupTestFixture;
 import kitchenpos.menugroup.dto.MenuGroupResponse;
 import kitchenpos.order.domain.OrderStatus;
 import kitchenpos.order.dto.OrderLineItemRequest;
 import kitchenpos.order.dto.OrderRequest;
 import kitchenpos.order.dto.OrderResponse;
-import kitchenpos.ordertable.acceptance.TableRestAssured;
-import kitchenpos.ordertable.domain.OrderTableTestFixture;
 import kitchenpos.ordertable.dto.OrderTableResponse;
-import kitchenpos.product.acceptance.ProductRestAssured;
-import kitchenpos.product.domain.ProductTestFixture;
 import kitchenpos.product.dto.ProductResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -69,17 +60,17 @@ public class OrderAcceptanceTest extends AcceptanceTest {
     @BeforeEach
     public void setUp() {
         super.setUp();
-        햄버거세트 = MenuGroupRestAssured.메뉴_그룹_등록되어_있음(MenuGroupTestFixture.generateMenuGroupRequest("햄버거세트")).as(MenuGroupResponse.class);
-        감자튀김 = ProductRestAssured.상품_등록되어_있음(ProductTestFixture.generateProductRequest("감자튀김", BigDecimal.valueOf(3000L))).as(ProductResponse.class);
-        콜라 = ProductRestAssured.상품_등록되어_있음(ProductTestFixture.generateProductRequest("콜라", BigDecimal.valueOf(1500L))).as(ProductResponse.class);
-        불고기버거 = ProductRestAssured.상품_등록되어_있음(ProductTestFixture.generateProductRequest("불고기버거", BigDecimal.valueOf(4000L))).as(ProductResponse.class);
-        불고기버거상품요청.add(MenuProductTestFixture.generateMenuProductRequest(감자튀김.getId(), 1L));
-        불고기버거상품요청.add(MenuProductTestFixture.generateMenuProductRequest(콜라.getId(), 1L));
-        불고기버거상품요청.add(MenuProductTestFixture.generateMenuProductRequest(불고기버거.getId(), 1L));
-        불고기버거세트 = MenuRestAssured.메뉴_등록되어_있음(
-                MenuTestFixture.generateMenuRequest("불고기버거세트", BigDecimal.valueOf(8500L), 햄버거세트.getId(), 불고기버거상품요청)).as(MenuResponse.class);
-        주문테이블A = TableRestAssured.주문_테이블_등록되어_있음(OrderTableTestFixture.generateOrderTableRequest(5, false)).as(OrderTableResponse.class);
-        주문테이블B = TableRestAssured.주문_테이블_등록되어_있음(OrderTableTestFixture.generateOrderTableRequest(4, false)).as(OrderTableResponse.class);
+        햄버거세트 = 메뉴_그룹_등록되어_있음(generateMenuGroupRequest("햄버거세트")).as(MenuGroupResponse.class);
+        감자튀김 = 상품_등록되어_있음(generateProductRequest("감자튀김", BigDecimal.valueOf(3000L))).as(ProductResponse.class);
+        콜라 = 상품_등록되어_있음(generateProductRequest("콜라", BigDecimal.valueOf(1500L))).as(ProductResponse.class);
+        불고기버거 = 상품_등록되어_있음(generateProductRequest("불고기버거", BigDecimal.valueOf(4000L))).as(ProductResponse.class);
+        불고기버거상품요청.add(generateMenuProductRequest(감자튀김.getId(), 1L));
+        불고기버거상품요청.add(generateMenuProductRequest(콜라.getId(), 1L));
+        불고기버거상품요청.add(generateMenuProductRequest(불고기버거.getId(), 1L));
+        불고기버거세트 = 메뉴_등록되어_있음(
+                generateMenuRequest("불고기버거세트", BigDecimal.valueOf(8500L), 햄버거세트.getId(), 불고기버거상품요청)).as(MenuResponse.class);
+        주문테이블A = 주문_테이블_등록되어_있음(generateOrderTableRequest(5, false)).as(OrderTableResponse.class);
+        주문테이블B = 주문_테이블_등록되어_있음(generateOrderTableRequest(4, false)).as(OrderTableResponse.class);
         불고기버거세트2개주문요청 = generateOrderLineItemRequest(불고기버거세트.getId(), 2);
         불고기버거세트1개주문요청 = generateOrderLineItemRequest(불고기버거세트.getId(), 1);
         주문A요청 = generateOrderRequest(주문테이블A.getId(), OrderStatus.COOKING, singletonList(불고기버거세트2개주문요청));

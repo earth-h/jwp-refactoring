@@ -1,18 +1,18 @@
 package kitchenpos.ordertable.domain;
 
+import static kitchenpos.menu.domain.MenuProductTestFixture.generateMenuProduct;
+import static kitchenpos.menugroup.domain.MenuGroupTestFixture.generateMenuGroup;
 import static kitchenpos.ordertable.domain.OrderTableTestFixture.generateOrderTable;
+import static kitchenpos.product.domain.ProductTestFixture.generateProduct;
+import static kitchenpos.tablegroup.domain.TableGroupTestFixture.generateTableGroup;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import kitchenpos.menu.domain.MenuProduct;
-import kitchenpos.menu.domain.MenuProductTestFixture;
 import kitchenpos.menugroup.domain.MenuGroup;
-import kitchenpos.menugroup.domain.MenuGroupTestFixture;
 import kitchenpos.product.domain.Product;
-import kitchenpos.product.domain.ProductTestFixture;
-import kitchenpos.tablegroup.domain.TableGroupTestFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,9 +27,9 @@ public class OrderTableTest {
 
     @BeforeEach
     void setUp() {
-        치킨버거 = ProductTestFixture.generateProduct(2L, "치킨버거", BigDecimal.valueOf(4000L));
-        치킨버거상품 = MenuProductTestFixture.generateMenuProduct(치킨버거, 1L);
-        햄버거단품 = MenuGroupTestFixture.generateMenuGroup(1L, "햄버거단품");
+        치킨버거 = generateProduct(2L, "치킨버거", BigDecimal.valueOf(4000L));
+        치킨버거상품 = generateMenuProduct(치킨버거, 1L);
+        햄버거단품 = generateMenuGroup(1L, "햄버거단품");
     }
 
     @DisplayName("주문 테이블의 그룹 상태를 해제한다.")
@@ -38,7 +38,7 @@ public class OrderTableTest {
         // given
         OrderTable 주문테이블A = generateOrderTable(4, true);
         OrderTable 주문테이블B = generateOrderTable(5, true);
-        TableGroupTestFixture.generateTableGroup(2L, Arrays.asList(주문테이블A, 주문테이블B));
+        generateTableGroup(2L, Arrays.asList(주문테이블A, 주문테이블B));
 
         // when
         주문테이블B.ungroup();
@@ -72,7 +72,7 @@ public class OrderTableTest {
         OrderTable 주문테이블B = generateOrderTable(5, true);
 
         // when
-        TableGroupTestFixture.generateTableGroup(Arrays.asList(주문테이블A, 주문테이블B));
+        generateTableGroup(Arrays.asList(주문테이블A, 주문테이블B));
 
         // then
         assertAll(
